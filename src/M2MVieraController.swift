@@ -262,7 +262,19 @@ class M2MVieraController {
 			}
 		}
 	}
+
+	class var searchHost: NSString {
+		return "239.255.255.250" as NSString
+	}
 	
+	class var searchPort: UInt16 {
+		return 1900
+	}
+	
+	class var searchData: NSData {
+		return ("M-SEARCH * HTTP/1.1'\r\nST: urn:panasonic-com:device:p00RemoteController:1\r\nMX: 1\r\nMAN: \"ssdp:discover\"\r\nHOST: 239.255.255.250:1900\r\n\r\n\r\n" as NSString).dataUsingEncoding(NSUTF8StringEncoding)!
+	}
+
 	class var sharedInstance: M2MVieraController {
 		struct Static {
 			static let instance : M2MVieraController = M2MVieraController()
