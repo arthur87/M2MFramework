@@ -65,7 +65,7 @@ class M2MDeviceController {
 	
 	:param: date もとのNSDate
 	:param: isStart trueのとき00:00:00、falseのとき23:59:59を追加します
-	:returns: 新しいNSData
+	:returns: 新しいNSDate
 	*/
 	private func stringToDate(date: String, isStart: Bool) -> NSDate {
 		let timestamp = (isStart) ? date + " 00:00:00" : date + " 23:59:59"
@@ -77,9 +77,9 @@ class M2MDeviceController {
 	/**
 	指定した日数を加減した新しいNSDateを返します。
 	
-	:param: date もとのNSData
+	:param: date もとのNSDate
 	:param: day 加減する日数
-	:returns: 新しいNSData
+	:returns: 新しいNSDate
 	*/
 	private func dateByAddingDay(date: NSDate, day: Int) -> NSDate {
 		let calendar:NSCalendar = NSCalendar.currentCalendar()
