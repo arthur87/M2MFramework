@@ -16,7 +16,7 @@ M2MVieraControllerでは、機器を発見するために必要な情報を提�
 
 > CocoaAsyncSocket
 >
-> CocoaAsyncSocket provides easy-to-use and powerful asynchronous socket libraries for Mac and iOS. The classes are described below.
+> CocoaAsyncSocket provides easy-to-use and powerful asynchronous socket libraries for Mac and iOS.
 >
 > https://github.com/robbiehanson/CocoaAsyncSocket
 
@@ -54,3 +54,14 @@ M2MVieraControllerでは、機器を発見するために必要な情報を提�
 機器のIPアドレスを指定してコードを送信します。
 
     NSURLConnection(request: M2MVieraController.sharedInstance.request(host, code: .D1), delegate: self)
+
+
+
+M2MDeviceController
+-------------------
+
+iOSに搭載されたセンサや情報にアクセスするためのクラスです。
+
+### 歩数に関する情報を取得する
+
+    M2MDeviceController.sharedInstance.pedometerQuery()
