@@ -263,14 +263,17 @@ class M2MVieraController {
 		}
 	}
 
+	/// 機器を探索するためのIPアドレス
 	class var searchHost: NSString {
 		return "239.255.255.250" as NSString
 	}
 	
+	/// 機器を探索するためのポート番号
 	class var searchPort: UInt16 {
 		return 1900
 	}
 	
+	/// 機器を探索するためのヘッダ
 	class var searchData: NSData {
 		return ("M-SEARCH * HTTP/1.1'\r\nST: urn:panasonic-com:device:p00RemoteController:1\r\nMX: 1\r\nMAN: \"ssdp:discover\"\r\nHOST: 239.255.255.250:1900\r\n\r\n\r\n" as NSString).dataUsingEncoding(NSUTF8StringEncoding)!
 	}
@@ -282,14 +285,39 @@ class M2MVieraController {
 		return Static.instance
 	}
 	
+	/**
+	キーコードを送信するためのURLリクエストを返します。
+	
+	:param: host IPアドレス
+	:param: code キーコード
+	
+	:returns: URLリクエスト
+	*/
 	func request(host: String, code: M2MVieraController.KeyCode) -> NSMutableURLRequest {
 		return self.commonURLRequest(host, action: "X_SendKey", option: "<X_KeyEvent>" + code.toString() + "</X_KeyEvent>")
 	}
 	
+	/**
+	文字列を送信するためのURLリクエストを返します。
+	
+	:param: host   IPアドレス
+	:param: string 文字列
+	
+	:returns: URLリクエスト
+	*/
 	func request(host: String, string: String) -> NSMutableURLRequest {
 		return self.commonURLRequest(host, action: "'X_SendString", option: "<X_String>" + string + "</X_String>")
 	}
 	
+	/**
+	URLリクエストを返します。
+	
+	:param: host   IPアドレス
+	:param: action アクション
+	:param: option オプション
+	
+	:returns: URLリクエスト
+	*/
 	private func commonURLRequest(host: String, action: String, option: String) -> NSMutableURLRequest {
 		let xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:%@ xmlns:u=\"urn:panasonic-com:service:p00NetworkControl:1\">%@</u:%@></s:Body></s:Envelope>"
 		let header = NSString(format: "\"urn:panasonic-com:service:p00NetworkControl:1#%@\"", action)
@@ -298,7 +326,7 @@ class M2MVieraController {
 		let request = NSMutableURLRequest(URL: NSURL(string: url)!)
 		request.HTTPMethod = "POST"
 		request.HTTPBody = input.dataUsingEncoding(NSUTF8StringEncoding)
-		request.addValue(header, forHTTPHeaderField: "SOAPACTION")
+		request.addValue(header as String, forHTTPHeaderField: "SOAPACTION")
 		
 		return request
 	}
